@@ -1,0 +1,8 @@
+@import "tailwindcss";
+html { scroll-behavior: smooth; }
+
+:root {
+  --accent: theme(colors.emerald.600);
+  --accent-soft: theme(colors.emerald.100);
+  --accent-text: theme(colors.emerald.700);
+}
