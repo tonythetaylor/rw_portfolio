@@ -1,3 +1,26 @@
+/**
+ * ============================================================
+ * SITE CONFIG (Edit This File to Update the Website)
+ * ============================================================
+ *
+ * This portfolio is designed so non-developers can update content
+ * and styling without touching React components.
+ *
+ * WHAT YOU CAN CHANGE HERE:
+ * - Site title + description (Navbar + SEO + Hero Overview card)
+ * - Theme accent color (buttons, logo, accents)
+ * - Section background strategy (solid, alternating, custom)
+ * - Mobile iOS “app-like” mode
+ * - Navigation labels + order + which sections appear
+ * - All content: hero, about, work, projects, testimonials, contact, footer
+ *
+ * IMAGE RULE:
+ * - Put images in /public/images/...
+ * - Reference them like: "/images/profile.jpg"
+ *
+ * ============================================================
+ */
+
 export type SiteSectionId =
   | "hero"
   | "about"
@@ -6,40 +29,71 @@ export type SiteSectionId =
   | "testimonials"
   | "connect";
 
+/**
+ * Controls navigation:
+ * - id: the section to scroll to
+ * - enabled: show/hide this section in nav AND page flow
+ * - label: the text shown in the navbar
+ */
 export type SectionConfig = {
   id: SiteSectionId;
   enabled: boolean;
-  label: string; // nav label
+  label: string;
 };
 
+/**
+ * Section background strategy:
+ * - "solid": every section uses base
+ * - "alternate": sections alternate base/alt (for visual separation)
+ * - "custom": everything uses base except overrides per section
+ */
 export type SectionBgMode = "solid" | "alternate" | "custom";
 
+/**
+ * Controls section background colors.
+ * Tailwind classes only (ex: "bg-white", "bg-neutral-50", "bg-emerald-50")
+ */
 export type ThemeSectionBackgrounds = {
   mode: SectionBgMode;
 
-  // Used for "solid" and as the default for "custom"
-  base: string; // Tailwind class like "bg-white" or "bg-neutral-50"
+  /**
+   * Base background color:
+   * Used in "solid"
+   * Used as default in "alternate" and "custom"
+   */
+  base: string;
 
-  // Used for "alternate"
-  alt?: string; // Tailwind class like "bg-emerald-50" or "bg-neutral-50"
+  /**
+   * Alternate background color:
+   * Used only when mode is "alternate"
+   */
+  alt?: string;
 
-  // Used for "custom" (and can also be used in any mode as overrides)
-  overrides?: Partial<Record<SiteSectionId, string>>; // e.g. { testimonials: "bg-neutral-50" }
+  /**
+   * Per-section overrides:
+   * Works in ANY mode and always wins.
+   * Example:
+   * overrides: {
+   *   testimonials: "bg-emerald-50",
+   *   connect: "bg-white"
+   * }
+   */
+  overrides?: Partial<Record<SiteSectionId, string>>;
 };
 
 export type WorkItem = {
   title: string;
-  org?: string;
-  dates?: string;
+  org?: string;   // optional label that can display alongside title
+  dates?: string; // optional dates (ex: "2022 - Present")
   bullets: string[];
 };
 
 export type Project = {
   title: string;
   description: string;
-  tags?: string[];
-  images: string[]; // paths in /public or external URLs
-  link?: string;
+  tags?: string[];     // used as “pill” tags
+  images: string[];    // images shown in grid (max 4 shown)
+  link?: string;       // optional external link
 };
 
 export type Testimonial = {
@@ -49,54 +103,115 @@ export type Testimonial = {
 };
 
 export type SiteConfig = {
+  /**
+   * meta.title:
+   * - Navbar brand label
+   * - Logo aria label
+   * - Optional use for SEO / browser title
+   *
+   * meta.description:
+   * - Shows in Hero "Overview" card (desktop)
+   * - Optional SEO meta usage
+   */
   meta: {
     title: string;
     description: string;
   };
 
+  /**
+   * Theme controls visual styling across the site:
+   *
+   * accent:
+   * - changes button colors
+   * - changes accent bars and dots
+   * - changes logo background (if logo is theme-driven)
+   *
+   * layout:
+   * - reserved for layout sizing control (centered/wide/full)
+   *
+   * iosShell:
+   * - if true, mobile iOS devices get "app-like" fullscreen behavior
+   * - desktop stays normal
+   *
+   * sections:
+   * - controls background color behavior across page sections
+   */
   theme: {
     accent: "emerald" | "stone" | "sky" | "rose" | "amber" | "violet";
     layout: "centered" | "wide" | "full";
-    iosShell?: boolean,
+    iosShell?: boolean;
     sections?: ThemeSectionBackgrounds;
   };
 
+  /**
+   * Navigation:
+   * - enabled: show/hide navbar entirely
+   * - sections: controls nav order AND page section order
+   */
   nav: {
     enabled: boolean;
-    sections: SectionConfig[]; // reorder here
+    sections: SectionConfig[];
   };
 
+  /**
+   * Hero section (top of page)
+   * - profileImage: circular avatar
+   * - backgroundImage: large background photo
+   * - ctas: buttons that scroll to sections
+   */
   hero: {
     name: string;
     tagline: string;
     bio: string;
-    profileImage?: string; // "/images/profile.jpg"
-    backgroundImage?: string; // "/images/hero-bg.jpg"
+    profileImage?: string;
+    backgroundImage?: string;
     ctas: Array<{ label: string; href: string }>;
   };
 
+  /**
+   * About section
+   * - paragraphs: main text content
+   * - highlights: optional cards (skills/competencies)
+   */
   about: {
     heading: string;
     paragraphs: string[];
     highlights?: Array<{ title: string; body: string }>;
   };
 
+  /**
+   * Work section
+   * - items: each item is a card with bullets
+   */
   work: {
     heading: string;
     items: WorkItem[];
   };
 
+  /**
+   * Projects section
+   * - intro: optional paragraph under heading
+   * - items: each project shows text + image grid
+   */
   projects: {
     heading: string;
     intro?: string;
     items: Project[];
   };
 
+  /**
+   * Testimonials section
+   */
   testimonials: {
     heading: string;
     items: Testimonial[];
   };
 
+  /**
+   * Connect section
+   * - email required
+   * - phone/linkedin/location optional
+   */
   connect: {
     heading: string;
     blurb?: string;
@@ -106,6 +221,10 @@ export type SiteConfig = {
     location?: string;
   };
 
+  /**
+   * Footer
+   * - {year} auto-replaces with the current year
+   */
   footer: {
     text: string;
   };
@@ -121,13 +240,20 @@ export const siteConfig: SiteConfig = {
   theme: {
     accent: "emerald",
     layout: "centered",
-  iosShell: true, 
 
-    // NEW: section background strategy
-    // Options:
-    // - mode: "solid"     -> all sections use base
-    // - mode: "alternate" -> sections alternate base/alt
-    // - mode: "custom"    -> all use base, with per-section overrides below
+    /**
+     * iOS shell:
+     * - true: iPhones get “app-like” fullscreen behavior
+     * - false: standard website behavior
+     */
+    iosShell: true,
+
+    /**
+     * Section background strategy:
+     * - solid: same background everywhere
+     * - alternate: alternating backgrounds for readability
+     * - custom: base everywhere + overrides
+     */
     sections: {
       mode: "alternate",
       base: "bg-white",
@@ -135,7 +261,6 @@ export const siteConfig: SiteConfig = {
 
       // Optional overrides (works in ANY mode; overrides always win)
       overrides: {
-        // hero: "bg-white",
         // testimonials: "bg-emerald-50",
         // connect: "bg-white",
       },
