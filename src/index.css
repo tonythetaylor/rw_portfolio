@@ -1,8 +1,37 @@
 @import "tailwindcss";
-html { scroll-behavior: smooth; }
+
+html {
+  scroll-behavior: smooth;
+}
 
 :root {
   --accent: theme(colors.emerald.600);
   --accent-soft: theme(colors.emerald.100);
   --accent-text: theme(colors.emerald.700);
+}
+
+/* iOS app-like mode only */
+html.ios-app,
+html.ios-app body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+html.ios-app body {
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+}
+
+/* Full-height app container */
+html.ios-app #root {
+  min-height: 100dvh;
 }

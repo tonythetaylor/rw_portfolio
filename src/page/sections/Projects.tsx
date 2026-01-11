@@ -1,6 +1,7 @@
 import { Container } from "../components/Container";
 import { getTheme } from "../../theme";
 import { useSiteConfig } from "../../site/SiteConfigContext";
+import { withBase } from "../../lib/asset";
 
 export function Projects() {
   const config = useSiteConfig();
@@ -42,7 +43,6 @@ export function Projects() {
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr]">
                 {/* Text column */}
                 <div className="p-6 sm:p-7">
-                  {/* Accent bar */}
                   <div className={`h-1 w-10 rounded-full ${t.accentBar}`} />
 
                   <div className="mt-4 text-lg sm:text-xl font-semibold tracking-tight text-black">
@@ -90,13 +90,13 @@ export function Projects() {
                 {/* Image grid */}
                 <div className="bg-neutral-100/70 p-4">
                   <div className="grid grid-cols-2 gap-3">
-                    {p.images.slice(0, 4).map((src) => (
+                    {p.images.slice(0, 4).map((src, i) => (
                       <div
-                        key={src}
+                        key={`${p.title}-img-${i}`}
                         className="aspect-square rounded-2xl overflow-hidden bg-neutral-200"
                       >
                         <img
-                          src={src}
+                          src={withBase(src)}
                           alt=""
                           className="h-full w-full object-cover"
                           loading="lazy"

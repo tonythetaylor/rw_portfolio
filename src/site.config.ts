@@ -57,6 +57,7 @@ export type SiteConfig = {
   theme: {
     accent: "emerald" | "stone" | "sky" | "rose" | "amber" | "violet";
     layout: "centered" | "wide" | "full";
+    iosShell?: boolean,
     sections?: ThemeSectionBackgrounds;
   };
 
@@ -120,6 +121,7 @@ export const siteConfig: SiteConfig = {
   theme: {
     accent: "emerald",
     layout: "centered",
+  iosShell: true, 
 
     // NEW: section background strategy
     // Options:

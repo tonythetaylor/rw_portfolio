@@ -1,16 +1,18 @@
 import { Container } from "../components/Container";
 import { getTheme } from "../../theme";
 import { useSiteConfig } from "../../site/SiteConfigContext";
+import { withBase } from "../../lib/asset";
 
 export function Hero() {
   const config = useSiteConfig();
   const { hero } = config;
   const t = getTheme(config);
 
-  // Use accentBar for hero primary button background so theme is consistent.
-  // Example: "bg-emerald-600"
   const primaryBg = t.accentBar;
-  const primaryHover = t.primaryBtnHover; // already theme-specific hover class
+  const primaryHover = t.primaryBtnHover;
+
+  const bgUrl = hero.backgroundImage ? withBase(hero.backgroundImage) : "";
+  const profileUrl = hero.profileImage ? withBase(hero.profileImage) : "";
 
   return (
     <section id="hero" className="relative overflow-hidden scroll-mt-16">
@@ -19,7 +21,7 @@ export function Hero() {
         <div
           className="absolute inset-0 scale-105"
           style={{
-            backgroundImage: `url(${hero.backgroundImage})`,
+            backgroundImage: `url(${bgUrl})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             filter: "brightness(0.75) saturate(0.7)",
@@ -27,19 +29,16 @@ export function Hero() {
         />
       )}
 
-      {/* Overlay gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/25 to-black/55" />
 
-      {/* Content */}
       <div className="relative min-h-[70dvh] flex items-center">
         <Container className="py-12 sm:py-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            {/* Left column */}
             <div className="text-white">
               <div className="flex items-center gap-4">
                 {hero.profileImage ? (
                   <img
-                    src={hero.profileImage}
+                    src={profileUrl}
                     alt="Profile"
                     className="h-20 w-20 rounded-full object-cover border border-white/40 shadow-[0_0_0_6px_rgba(255,255,255,0.15)]"
                   />
@@ -50,7 +49,9 @@ export function Hero() {
                     {hero.name}
                   </h1>
 
-                  <div className={`mt-2 text-xs sm:text-sm tracking-[0.35em] uppercase ${t.kickerText}`}>
+                  <div
+                    className={`mt-2 text-xs sm:text-sm tracking-[0.35em] uppercase ${t.kickerText}`}
+                  >
                     {hero.tagline}
                   </div>
                 </div>
@@ -70,14 +71,8 @@ export function Hero() {
                     t.ring,
                   ].join(" ");
 
-                  // Primary: theme accent (driven by accentBar)
-                  const primary = [
-                    primaryBg,
-                    "text-white shadow-sm",
-                    primaryHover,
-                  ].join(" ");
+                  const primary = [primaryBg, "text-white shadow-sm", primaryHover].join(" ");
 
-                  // Secondary: glass button
                   const secondary = [
                     "bg-white/12 text-white border border-white/25 backdrop-blur-sm",
                     "hover:bg-white/18 hover:border-white/35",
@@ -97,7 +92,6 @@ export function Hero() {
               </div>
             </div>
 
-            {/* Right column (overview card) */}
             <div className="hidden lg:block">
               <div className="rounded-3xl bg-white/80 backdrop-blur border border-white/30 p-6">
                 <div className="text-xs tracking-[0.35em] uppercase text-black/60">
