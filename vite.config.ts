@@ -4,5 +4,5 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [tailwindcss(), react()],
-  base: "/rw_portfolio/",
+  base: "/", // ✅ REQUIRED for custom domain
 });
