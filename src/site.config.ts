@@ -390,7 +390,7 @@ export const siteConfig: SiteConfig = {
         description:
           "Founded and grew WOCO Hike & Sound Healing, offering nature-based healing experiences including sound baths and guided meditations. Empowered women of color, introduced underserved communities to outdoor recreation, facilitated trauma-informed wellness retreats, and supported individuals affected by violence and stress.",
         tags: ["WOCO", "Wellbeing", "Trauma-Informed", "Nature-Based Healing"],
-        images: ["/images/projects/woco-1.jpg", "/images/projects/woco-2.jpg", "/images/projects/woco-3.jpg"],
+        images: ["/images/projects/woco-1.jpg", "/images/projects/woco-2.jpg", "/images/projects/woco-3.jpg",  "/images/projects/woco-4.jpg"],
       },
     ],
   },
